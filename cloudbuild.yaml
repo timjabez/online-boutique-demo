@@ -31,6 +31,14 @@ steps:
   args:
   - -c
   - |
-     gcloud builds submit 'src/cartservice' --config 'src/cartservice/cloudbuild.yaml'
+     gcloud builds submit 'src/adservice' --config 'src/adservice/cloudbuild.yaml' &
+     gcloud builds submit 'src/cartservice' --config 'src/cartservice/cloudbuild.yaml' &
+     gcloud builds submit 'src/checkoutservice' --config 'src/checkoutservice/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/emailservice' --config 'src/emailservice/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/frontend' --config 'src/frontend/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/loadgenerator' --config 'src/loadgenerator/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/productcatalogservice' --config 'src/productcatalogservice/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/recommendationservice' --config 'src/recommendationservice/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO} &
+     gcloud builds submit 'src/shippingservice' --config 'src/shippingservice/cloudbuild.yaml' --substitutions SHORT_SHA=$SHORT_SHA,_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO}
 # [END cloudbuild_microservice_demo_cloudbuild]
 
